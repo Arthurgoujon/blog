@@ -5,7 +5,7 @@ const methodOverride = require('method-override');
 
 const app = express();
 
-// Connect Database
+// // Connect Database
 connectDB();
 
 // Init Middleware
