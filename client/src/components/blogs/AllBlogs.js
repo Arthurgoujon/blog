@@ -4,7 +4,7 @@ import BlogItem from './BlogItem';
 import Spinner from '../layout/Spinner';
 import BlogContext from '../../context/blog/blogContext';
 
-const NewBlog = () => {
+const AllBlogs = () => {
   const blogContext = useContext(BlogContext);
 
   const { blogs, filtered, getBlogs, loading } = blogContext;
@@ -35,4 +35,4 @@ const NewBlog = () => {
   );
 };
 
-export default NewBlog;
+export default AllBlogs;

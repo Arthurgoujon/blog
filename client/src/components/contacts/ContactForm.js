@@ -2,10 +2,11 @@ import React, { useState, useContext, useEffect } from 'react';
 import ContactContext from '../../context/contact/contactContext';
 
 const ContactForm = () => {
+  //create context
   const contactContext = useContext(ContactContext);
-
   const { addContact, updateContact, clearCurrent, current } = contactContext;
 
+  //load current if any
   useEffect(() => {
     if (current !== null) {
       setContact(current);

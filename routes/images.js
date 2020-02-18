@@ -47,29 +47,6 @@ const storage = new GridFsStorage({
 
 const upload = multer({ storage });
 
-// // @route GET /
-// // @desc Loads form
-// router.get('/', (req, res) => {
-//   gfs.files.find().toArray((err, files) => {
-//     // Check if files
-//     if (!files || files.length === 0) {
-//       res.render('index', { files: false });
-//     } else {
-//       files.map(file => {
-//         if (
-//           file.contentType === 'image/jpeg' ||
-//           file.contentType === 'image/png'
-//         ) {
-//           file.isImage = true;
-//         } else {
-//           file.isImage = false;
-//         }
-//       });
-//       res.render('index', { files: files });
-//     }
-//   });
-// });
-
 //@route POST/ upload
 //@desc uploads a new file to db
 router.post('/upload', upload.single('file'), (req, res) => {

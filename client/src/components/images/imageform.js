@@ -1,54 +1,47 @@
-import React, { useState, useContext, useEffect } from 'react';
-import ImageContext from '../../context/image/imageContext';
+import React, { Component } from 'react';
+import axios from 'axios';
 
-const ImageForm = () => {
-  const imageContext = useContext(ImageContext);
+class Imageform extends Component {
+  state = {
+    selectedFile: null
+  };
 
-  const { addImage } = imageContext;
+  fileSelectedHandler = e => {
+    this.setState({
+      selectedFile: e.target.files[0]
+    });
 
-  useEffect(() => {
-    if (current !== null) {
-      setImage(current);
-    } else {
-      setImage({
-        title: '',
-        description: ''
-      });
-    }
-  }, [blogContext, current]);
+    console.log(e.target.files[0]);
+  };
 
-  const [blog, setBlog] = useState({
-    title: '',
-    description: ''
-  });
-
-  const { title, description } = blog;
-
-  const onChange = e => setBlog({ ...blog, [e.target.name]: e.target.value });
-
-  const onSubmit = e => {
+  fileUploadHandler = e => {
     e.preventDefault();
-    if (current === null) {
-      addBlog(blog);
-    } else {
-      updateBlog(blog);
-    }
-    clearAll();
+    const fd = new FormData();
+    fd.append('file', this.state.selectedFile); //the bloody form has to be called 'file', as defined in the server route
+    fd.append('ref', '1234');
+    axios
+      .post('API/images/upload', fd, {})
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
-  const clearAll = () => {
-    clearCurrent();
-  };
+  render() {
+    return (
+      <div>
+        <input
+          type='file'
+          id='file'
+          name='file'
+          onChange={this.fileSelectedHandler}
+        />
+        <button onClick={this.fileUploadHandler}>Upload</button>
+      </div>
+    );
+  }
+}
 
-  return (
-    <form action="/upload" method="POST" enctype="multipart/form-data">
-    <div class="custom-file mb-3">
-      <input type="file" name="file" id="file" class="custom-file-input">
-      <label for="file" class="custom-file-label">Choose File</label>
-    </div>
-    <input type="submit" value="Submit" class="btn btn-primary btn-block">
-  </form> 
-  );
-};
-
-export default ImageForm;
+export default Imageform;
